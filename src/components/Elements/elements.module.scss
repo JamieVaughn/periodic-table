@@ -1,0 +1,118 @@
+.periodic-table {
+    display: grid;
+    grid-template-columns: repeat(18, 71fr);
+    grid-template-rows: repeat(10, 95px);
+    justify-content: center;
+    grid-gap: 2px;
+    margin: 0 1rem;
+}
+
+.periodic-table > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px;
+    border-width: 3px;
+    transition: all 200ms;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+.Gas {
+    border-style: dashed;
+}
+.Liquid {
+    border-style: inset;
+    box-shadow: inset 0 0 8px #585868;
+}
+.Solid {
+    border-style: solid;
+}
+
+.noble-gas {
+    border-color: #ffbc42;
+    &:hover {
+        background: #ffbc42;
+    }
+}
+.alkaline-earth-metal {
+    border-color: #ec674e;
+    &:hover {
+        background: #ec674e;
+    }
+}
+.polyatomic-nonmetal {
+    border-color: rosybrown;
+    &:hover {
+        background: rosybrown;
+    }
+}
+.diatomic-nonmetal {
+    border-color: #d81159;
+    &:hover {
+        background: #d81159;
+        color: white;
+    }
+}
+.alkali-metal {
+    border-color: #8f2056;
+    &:hover {
+        background: #8f2056;
+        color: white;
+    }
+}
+.transition-metal {
+    border-color: #585868;
+    &:hover {
+        background: #585868;
+        color: white;
+    }
+}
+.post-transition-metal {
+    border-color: #218380;
+    &:hover {
+        background: #218380;
+    }
+}
+.lanthanide {
+    border-color: #4aabaf;
+    &:hover {
+        background: #4aabaf;
+    }
+}
+.metalloid {
+    border-color: #73d2de;
+    &:hover {
+        background: #73d2de;
+    }
+}
+.actinide {
+    border-color: crimson;
+    &:hover {
+        background: crimson;
+        color: white;
+    }
+}
+.unknown {
+    border-color: peru;
+    &:hover {
+        background: tan;
+    }
+}
+
+.top-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.left-align {
+    width: 100%;
+    text-align: left;
+}
+
+.tiny {
+    font-size: 10px;
+}
