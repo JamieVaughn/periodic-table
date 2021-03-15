@@ -1,37 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Card from './Card'
+import Placard from './Placard'
 import { elements } from '../../data/elements'
 import styles from './elements.module.scss'
 
 export default function Elements (props) {
+    const [hover, setHover] = useState(null)
+    const [select, setSelect] = useState(null)
 
+    const handleHover = element => setHover(element)
+    const handleSelect = element => setSelect(element)
 
-    const table = Object.values(elements).map( el => {
-        const css = el.category.includes('unknown') ? 'unknown' : el.category.replaceAll(' ', '-')
-        console.log( css.length ? css : el.category)
-        return (
-            <div key={el.name}
-                className={`${styles[css]} ${styles[el.phase]}`}
-                title={el.summary}
-                style={{
-                    gridColumn: el.xpos,
-                    gridRow: el.ypos
-                }}
-            >
-                <div className={styles['top-row']}>
-                    <small className={styles['left-align']}>{el.number}</small>
-                    <small className={styles.tiny}>{el.atomic_mass.toFixed(2)}</small>
-                </div>
-                <strong>{el.symbol}</strong>
-                <small className={styles.tiny}>{el.name}</small>
-            </div>
-        )
-    })
+    const elementList = Object.values(elements).map( (el, i) => <Card key={i} element={el} handleHover={select ? null : handleHover} handleSelect={handleSelect} />)
 
     return (
         <article>
-            <h1>Periodic Table of the Elements</h1>
+            <h5>(Double Click an element to pin its placard at the top. Click the pin icon in the upper right of the placard to unpin it.)</h5>
             <div className={styles['periodic-table']}>
-                {table}
+                <Placard element={select ?? hover} handleSelect={select ? handleSelect : null} />
+                {elementList}
+                <div className={styles['nide-label']} style={{gridColumn: 3, gridRow: 7}}><span>Lanthanides</span></div>
+                <div className={styles['nide-label']} style={{gridColumn: 3, gridRow: 8}}><span>Actinides</span></div>
             </div>
         </article>
     )

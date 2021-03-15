@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Periodic Table of the Elements</p>
+        <h1>Periodic Table of the Elements</h1>
       </header>
       <Elements />
     </div>

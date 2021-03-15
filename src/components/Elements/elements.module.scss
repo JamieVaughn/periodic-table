@@ -1,23 +1,10 @@
 .periodic-table {
     display: grid;
     grid-template-columns: repeat(18, 71fr);
-    grid-template-rows: repeat(10, 95px);
+    grid-template-rows: repeat(11, 95px);
     justify-content: center;
     grid-gap: 2px;
     margin: 0 1rem;
-}
-
-.periodic-table > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2px;
-    border-width: 3px;
-    transition: all 200ms;
-    &:hover {
-        transform: scale(1.2);
-    }
 }
 
 .Gas {
@@ -101,7 +88,19 @@
         background: tan;
     }
 }
-
+.nide-label {
+    border: 1px solid palegoldenrod;
+    span {
+        height: 100%;
+        font-size: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &:hover {
+        transform: none !important;
+    }
+}
 .top-row {
     width: 100%;
     display: flex;
@@ -115,4 +114,62 @@
 
 .tiny {
     font-size: 10px;
+}
+.medium {
+    font-size: 1.8rem;
+}
+.large {
+    font-size: 2.5rem;
+}
+.xlarge {
+    font-size: 4em;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 28.5%;
+    padding: 2px;
+    border-width: 3px;
+    transition: all 200ms;
+    user-select: none;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+.placard {
+    max-width: 100%;
+    grid-column-start: 3;
+    grid-column-end: 13;
+    grid-row-start: 1;
+    grid-row-end: 5;
+    display: flex;
+    justify-content: space-between;
+}
+
+.details {
+    order: 2;
+    position: relative;
+    border: 1px solid grey;
+    text-align: left;
+    padding: 4px;
+    max-width: 70%;
+    strong {
+        text-transform: capitalize;
+    }
+}
+.placard-list {
+    list-style: none;
+    font-size: 15px;
+    columns: 2;
+}
+
+.spectra {
+    text-decoration: underline !important;
+    color: royalblue !important;
+    background-color: white !important;
+    font-weight: normal !important;
 }

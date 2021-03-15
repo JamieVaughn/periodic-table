@@ -25,6 +25,22 @@
   color: #61dafb;
 }
 
+div[class*="periodic-table"] div[class*="card"] {
+  
+}
+
+div[class*="periodic-table"] a {
+  text-decoration: none;
+  color: black;
+}
+div[class*="periodic-table"] a:hover {
+  text-decoration: underline;
+  cursor: help; /* alias */
+  color: lightblue;
+  background-color: purple;
+  font-weight: bold;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
