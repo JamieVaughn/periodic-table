@@ -18,8 +18,10 @@ export default function Card (props) {
             style={inlineStyles}
         >
             <div className={styles['top-row']}>
-                <small className={`${props.inplacard ? styles.large : ''} ${styles['left-align']}`}>{number}</small>
-                <small className={props.inplacard ? styles.medium : styles.tiny}>{atomic_mass.toFixed(2)}</small>
+                { props.inplacard ? <small className={styles.small}>Atomic Number</small> : null }
+                { props.inplacard ? <small className={`${styles['right-align']} ${styles.small}`}>Atomic Mass</small> : null }
+                <small className={props.inplacard ? styles.large : ''}>{number}</small>
+                <small className={`${styles['right-align']} ${props.inplacard ? styles.medium : styles.tiny}`}>{atomic_mass.toFixed(2)}</small>
             </div>
             <strong className={props.inplacard ? styles.xlarge : styles.medium}>{symbol}</strong>
             <small className={props.inplacard ? styles.medium : styles.tiny}><a href={source}>{name}</a></small>

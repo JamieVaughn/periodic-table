@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import Card from './Card'
 import Placard from './Placard'
-import { elements } from '../../data/elements'
 import styles from './elements.module.scss'
 
-export default function Elements (props) {
+export default function Table (props) {
+    const { data } = props
     const [hover, setHover] = useState(null)
     const [select, setSelect] = useState(null)
 
     const handleHover = element => setHover(element)
     const handleSelect = element => setSelect(element)
 
-    const elementList = Object.values(elements).map( (el, i) => <Card key={i} element={el} handleHover={select ? null : handleHover} handleSelect={handleSelect} />)
+    const elementList = Object.values(data).map( (el, i) => <Card key={i} element={el} handleHover={select ? null : handleHover} handleSelect={handleSelect} />)
 
     return (
         <article>

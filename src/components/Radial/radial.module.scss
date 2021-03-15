@@ -1,0 +1,21 @@
+.group {
+    &:hover {
+        cursor: pointer;
+    }
+}
+.circle-text {
+    font-weight: 900;
+    font-size: 1rem;
+}
+.circle-text.selected {
+    fill: white;
+}
+.cluster {
+    box-shadow: 0 0 50px black;
+    overflow: visible; 
+    background: radial-gradient(black, indigo, darkmagenta, purple, violet, plum, lavender, white 85%);
+    border-radius: 100%;
+}
+.radial-placard {
+    padding: 2.5rem;
+}
