@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 import * as d3 from 'd3'
 
-const groups = group => ({
-    17: 'alkali metals',
-    16: 'coinage metals',
-    15: 'alkaline earth metals',
-    14: 'volatilve metals',
-    12: 'post-transition metals',  // (icosagens), boron group
-    10: 'metalloids',
-    8: 'pnictogens',
-    6: 'chalcogens',
-    4: 'halides',
-    2: 'noble gases',
+const groups = group => ({ // real group # in comment
+    2: 'alkali metals', // 1
+    4: 'alkaline earth metals', // 2
+    3: 'coinage metals', // 11
+    5: 'volatile metals', // 12
+    7: 'post-transition metals',  // 13 (icosagens), boron group
+    9: 'metalloids', // 14
+    11: 'pnictogens', // 15
+    13: 'chalcogens', // 16
+    15: 'halides', // 17
+    17: 'noble gases', // 18
 }[group] || 'transition metals')
 
 export default function Slice (props) {
     const [hover, setHover] = useState(false)
     const { group, radius, turnFrom, turnTo } = props
-    const textRadius = radius/1.345
+    const textRadius = radius/1.4
     const handleLeave = e => {
         if(e.relatedTarget.nodeName === 'circle' && e.relatedTarget.className.baseVal === 'element') {
             return
@@ -47,8 +47,8 @@ export default function Slice (props) {
             <path d={path} stroke="url(#linear)" strokeWidth="1" fill={hover ? "#20004244" : "transparent"} />
             <g 
              style={{
-                display: hover ? 'block' : 'none',
-                transform: `rotate(${19*group - 150}deg) translate(${textRadius}px, ${textRadius}px)`
+                // display: hover ? 'block' : 'none',
+                transform: `rotate(${19*group - 150}deg) translate(${textRadius-50}px, ${textRadius+50}px)`
              }}
             >
                 <text 
@@ -58,7 +58,7 @@ export default function Slice (props) {
                     transformOrgin: 'center', 
                     transform: `rotate(${-19*group+50}deg) translate(${-80}px, ${0}px)`
                 }}>
-                    {groups(group)}
+                    {groups(group )}
                 </text>
             </g>
         </g>

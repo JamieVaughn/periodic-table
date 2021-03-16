@@ -20,19 +20,17 @@ const colorTable = type => {
 export default function CircleElement (props) {
     const {dimensions, element, select, handleSelect} = props
     const [highlight, setHighlight] = useState(null)
-    const origin = {
-        x: dimensions.x - dimensions.radius,
-        y: dimensions.y - dimensions.radius
-    }
+
     const applyHighlight = name => {
         setHighlight(name)
     }
+    
     useEffect(() => {
     }, [highlight])
 
     return (
         <g className={styles.group}
-           transform={`rotate(${dimensions.turn} 0 0)`} 
+           transform={`rotate(${-dimensions.turn} 0 0)`} 
            transform-origin='center' 
            onClick={() => handleSelect(element)}
            onMouseOver={() => applyHighlight(element.name)}
@@ -48,12 +46,12 @@ export default function CircleElement (props) {
                 fill={element.name === select?.name ? 'indigo' : 'transparent'}
             />
             <text 
-                x={origin.x} 
-                y={origin.y} 
-                className={`${styles['circle-text']} ${element.number < 87 || select?.name === element.name ? styles.selected : ''}`}
+                x={dimensions.x} 
+                y={dimensions.y} 
+                className={`${styles['circle-text']} ${element.ypos < 8 || select?.name === element.name ? styles.selected : ''}`}
                 strokeWidth={element.atomic_mass > 275 ? '1' : '0'}
-                transform-origin={`${origin.x} ${origin.y}`}
-                transform={`rotate(${-dimensions.turn} 0 0) ${element.name === select?.name ? 'scale(1.5)' : ''}`} 
+                transform-origin={`${dimensions.x} ${dimensions.y}`}
+                transform={`rotate(${+dimensions.turn} 0 0) ${element.name === select?.name ? 'scale(1.5)' : ''}`} 
             >
                 {element.symbol}
             </text>

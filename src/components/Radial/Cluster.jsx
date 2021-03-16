@@ -8,11 +8,11 @@ const orbitals = Array(10).fill(18.189) // in theory = 18 (max # of Groups per P
 const turnTable = group => orbitals[group]
 
 const getOffset = el => {
-    const lanthanide = 'lanthanide'=== el.category ? 7 : null
+    const lanthanide = 'lanthanide'=== el.category ? 8 : null
     const nine = el.ypos === 7 ? 9 : null
-    const actinide = 'actinide' === el.category ? 8 : null
+    const actinide = 'actinide' === el.category ? 9 : null
     const uue = el.symbol === 'Uue' ? 10 : null
-    return uue ?? nine ?? actinide ?? lanthanide ?? el.ypos
+    return uue ?? actinide ?? lanthanide ?? el.ypos
 }
 
 export default function Cluster (props) {
