@@ -6,6 +6,19 @@ import styles from './radial.module.scss'
 import Placard from '../Table/Placard'
 
 // https://github.com/d3/d3-force
+// https://en.wikipedia.org/wiki/Atomic_radii_of_the_elements_(data_page)
+const groups = group => ({
+    17: 'alkali metals',
+    16: 'coinage metals',
+    15: 'alkaline earth metals',
+    14: 'volatilve metals',
+    12: 'post-transition metals',  // (icosagens), boron group
+    10: 'metalloids',
+    8: 'pnictogens',
+    6: 'chalcogens',
+    4: 'halides',
+    2: 'noble gases',
+}[group] || 'transition metals')
 const colorTable = type => {
     return {
         "noble gas": "coral",
@@ -32,7 +45,6 @@ const CircleElement = props => {
         setHighlight(name)
     }
     useEffect(() => {
-        // console.log('check', highlight)
     }, [highlight])
 
     return (
@@ -43,6 +55,7 @@ const CircleElement = props => {
            onMouseOver={() => applyHighlight(element.name)}
         >
             <circle 
+                className="element"
                 data-id={element.name}
                 cx={dimensions.x} 
                 cy={dimensions.y} 
@@ -65,40 +78,100 @@ const CircleElement = props => {
     )
 }
 
-const orbitals = [2, 8, 8, 18, 18, 18, 18, 18, 18, 1]
+function Slice (props) {
+    const [hover, setHover] = useState(false)
+    const { group, r, turnFrom, turnTo } = props
 
+    const handleLeave = e => {
+        if(e.relatedTarget.nodeName === 'circle' && e.relatedTarget.className.baseVal === 'element') {
+            return
+        }
+        setHover(false)
+    }
+
+    const arc = d3.arc();
+    const path = arc({
+        innerRadius: 0,
+        outerRadius: r/2,
+        startAngle: turnFrom,
+        endAngle: turnTo
+    }); // "M0,-100A100,100,0,0,1,100,0L0,0Z"
+    return (
+        <g 
+            transform-origin='center'
+            style={{transform: `rotate(${100}deg) translate(${r/2}px, ${r/2}px)`}} 
+            onMouseEnter={() => setHover(true)} 
+            onMouseLeave={handleLeave}>
+                <defs>
+                    <radialGradient id="linear" x1="100%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   stop-color="white"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                    </radialGradient>
+                </defs>
+            <path d={path} stroke="url(#linear)" strokeWidth="1" fill={hover ? "#20004244" : "transparent"} />
+            <g 
+             style={{
+                // display: hover ? 'block' : 'none',
+                transform: `rotate(${19*group - 150}deg) translate(${r/3}px, ${r/2.5}px)`
+             }}
+            >
+                <text 
+                data-group={group} 
+                style={{
+                    fontSize: '1.5rem', 
+                    transformOrgin: 'center', 
+                    transform: `rotate(${-19*group+50}deg) translate(${-75}px, ${0}px)`
+                }}>
+                    {groups(group)}
+                </text>
+            </g>
+        </g>
+    )
+}
+
+const orbitals = Array(10).fill(18.189) // in theory = 18 (max # of groups in a period), but somewhere between 18.18 - 18.25 spreads out better
 const turnTable = group => orbitals[group]
 
 const Cluster = props => {
     const { data, dimensions, select, handleSelect } = props
-    const { w, h } = dimensions
-    const elements = Object.values(data).map( (el, i) => {
-        
+    const { r } = dimensions
+
+    const getOffset = el => {
         const lanthanide = 'lanthanide'=== el.category ? 7 : null
         const nine = el.ypos === 7 ? 9 : null
         const actinide = 'actinide' === el.category ? 8 : null
         const uue = el.symbol === 'Uue' ? 10 : null
-        const offset = uue ?? nine ?? actinide ?? lanthanide ?? el.ypos
-        return <CircleElement 
-                    key={i} 
-                    select={select}
-                    handleSelect={handleSelect}
-                    element={el} 
-                    dimensions={{
-                        turn: 360*i*(turnTable(offset - 1))/(2*Math.PI), 
-                        r: el.atomic_mass/(offset**1.1), 
-                        x: el.name == 'Helium' ? w/2 + ((offset - 0.5)/18)*(w) : w/2 + ((offset - 1)/18)*(w), 
-                        y: h/2}} 
-                />
-    })
+        return uue ?? nine ?? actinide ?? lanthanide ?? el.ypos
+    }
+
+    const elements = Object.values(data).map( (el, i) => (
+        <CircleElement 
+            key={i} 
+            select={select}
+            handleSelect={handleSelect}
+            element={el} 
+            dimensions={{
+                // turn: 395*el.xpos*(turnTable(getOffset(el) - 1))/360, // keeps nobel gas and alkali metals next to each other
+                turn: 360*el.xpos*(turnTable(getOffset(el) - 1))/(2*Math.PI), 
+                r: el.atomic_mass/(getOffset(el)**1.1), 
+                x: el.name == 'Helium' ? r/2 + ((getOffset(el) - 0.5)/18)*(r) : r/2 + ((getOffset(el) - 1)/18)*(r), 
+                y: r/2}} 
+        />
+    ))
     const orbits = orbitals.map((_, i) => ( //[32, 64, 128, 192, 256, 320, 384, 448, 512]
-        <circle key={i} cx={w/2} cy={h/2} r={(i || 0.5) * 64} fill="transparent" stroke={_ !== 1 ? "white" : "black"} strokeWidth="1" strokeDasharray="10 10" strokeDashoffset="10">
+        <circle key={i} cx={r/2} cy={r/2} r={(i || 0.5) * 64} fill="transparent" stroke={_ !== 1 ? "white" : "black"} strokeWidth="1" strokeDasharray="10 10" strokeDashoffset="10">
             <animate attributeName='stroke-dashoffset' dur={6.3 / ((_+1)/((i+1)**.5)) + 's'} repeatCount="indefinite" from="5" to="45" />
         </circle>
     ))
+    
+    const slices = Array(18).fill(1).map((_, i) => (
+        <Slice group={i+1} r={1150} turnTo={(18.189*(i+1)/(55))} turnFrom={(18.189*i)/(55)} />
+    ))
+
     return (
-        <svg width={w} height={h} transform-origin={`${w/2}px ${h/2}px`} className={styles.cluster}>
+        <svg width={r} height={r} transform-origin={`${r/2}px ${r/2}px`} className={styles.cluster}>
             {orbits}
+            {slices}
             {elements}
         </svg>
     )
@@ -106,7 +179,7 @@ const Cluster = props => {
 
 export default function Radial (props) {
     const { data, dimensions } = props
-    const { w, h } = dimensions
+    const { r } = dimensions
     const [select, setSelect] = useState(null)
     // const [select, setSelect] = useState(null)
 
@@ -119,7 +192,7 @@ export default function Radial (props) {
                 <Placard element={select} isradial={true}/>
             </div>
             <div className={styles['radial-diagram']}>
-                <Cluster data={data} dimensions={{w: w, h: h}} select={select} handleSelect={handleSelect} />
+                <Cluster data={data} dimensions={{r: r}} select={select} handleSelect={handleSelect} />
             </div>
         </article>
     )

@@ -27,7 +27,7 @@ function App(props) {
       </header>
       <Routes>
         <Route path="/" element={<Table data={elements} />} />
-        <Route path="/radial" element={<Radial data={elements} dimensions={{w: 1150, h: 1150,  m: 10}} />} />
+        <Route path="/radial" element={<Radial data={elements} dimensions={{r: 1150, w: 1150, h: 1150,  m: 10}} />} />
       </Routes>
 
     </div>
