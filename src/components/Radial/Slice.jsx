@@ -47,7 +47,7 @@ export default function Slice (props) {
             <path d={path} stroke="url(#linear)" strokeWidth="1" fill={hover ? "#20004244" : "transparent"} />
             <g 
              style={{
-                // display: hover ? 'block' : 'none',
+                display: hover ? 'block' : 'none',
                 transform: `rotate(${19*group - 150}deg) translate(${textRadius-50}px, ${textRadius+50}px)`
              }}
             >

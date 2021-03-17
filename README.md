@@ -1,14 +1,16 @@
 # Periodic Table App
 
-Made with Vite.js ⚡, React ⚛️
+Made with Vite.js ⚡ & React ⚛️
 
 This app visualizes the chemical elements in two ways:
 
+## Table Format
 * Classical tabular format with hover and click-to-pin interactions.
 * Uses CSS Grid
 
 ![Periodic Table of the Elements](./tabular_elements.jpg)
 
+## Polar Format
 * Radial diagram with polar coordinateswith hover and click interactions.
 * Uses SVG groups, circles and paths.
 
