@@ -147,6 +147,7 @@
     border-width: 3px;
     transition: all 200ms;
     user-select: none;
+    background: #ffffffaa;
     &:hover {
         transform: scale(1.2);
     }
@@ -160,6 +161,8 @@
     grid-row-end: 5;
     display: flex;
     justify-content: space-between;
+    background: #ffffffaa;
+
 }
 
 .details {
@@ -181,6 +184,10 @@
 }
 .inradial {
     min-height: 385px;
+    flex-direction: column;
+    .details {
+        max-width: 100%;
+    }
 }
 
 .spectra {

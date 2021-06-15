@@ -18,12 +18,12 @@ export default function Radial (props) {
     // const handleSelect = element => setSelect(element)
 
     return (
-        <article>
-            <div className={styles['radial-placard']}>
-                <Placard element={select} isradial={true}/>
-            </div>
+        <article className={styles.grid}>
             <div className={styles['radial-diagram']}>
                 <Cluster data={data} dimensions={{radius: radius, w: radius*2, h: radius*2}} select={select} handleSelect={handleSelect} />
+            </div>
+            <div className={styles['radial-placard']}>
+                <Placard element={select} isradial={true}/>
             </div>
         </article>
     )

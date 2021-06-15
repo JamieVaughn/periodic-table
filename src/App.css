@@ -25,6 +25,12 @@
   color: #61dafb;
 }
 
+.nav-link {
+  padding: 0.5rem;
+  color: coral;
+  text-decoration: none;
+}
+
 div[class*="periodic-table"] div[class*="card"] {
   
 }

@@ -4,7 +4,7 @@ import CircleElement from './CircleElement'
 import Slice from './Slice'
 import styles from './radial.module.scss'
 
-const orbitals = Array(10).fill(18.189) // in theory = 18 (max # of Groups per Period), but ~18.18-18.25 spreads out better
+let orbitals = Array(10).fill(18.189) // in theory = 18 (max # of Groups per Period), but ~18.18-18.25 spreads out better
 const turnTable = group => orbitals[group]
 
 const getOffset = el => {
@@ -35,7 +35,7 @@ export default function Cluster (props) {
         />
     ))
     const orbits = orbitals.map((_, i) => ( //[32, 64, 128, 192, 256, 320, 384, 448, 512]
-        <circle key={i} cx={radius} cy={radius} r={(i || 0.5) * 64} fill="transparent" stroke={_ !== 1 ? "white" : "black"} strokeWidth="1" strokeDasharray="10 10" strokeDashoffset="10">
+        <circle key={i} cx={radius} cy={radius} r={(i || 0.5) * radius/9} fill="transparent" stroke={_ !== 1 ? "white" : "black"} strokeWidth="1" strokeDasharray="10 10" strokeDashoffset="10">
             <animate attributeName='stroke-dashoffset' dur={6.3 / ((_+1)/((i+1)**.5)) + 's'} repeatCount="indefinite" from="5" to="45" />
         </circle>
     ))

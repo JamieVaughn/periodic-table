@@ -11,6 +11,7 @@ import logo from './logo.svg'
 import './App.css'
 
 function App(props) {
+  const dimen = window.innerWidth * (2/3) / 2
   return (
     <div className="App">
       <header className="App-header">
@@ -18,16 +19,16 @@ function App(props) {
             <img src={logo} className="App-logo" alt="logo" />
         </Link>
         <h1>Periodic Table of the Elements</h1>
-        <Link to={'/'} style={{ marginLeft: 'auto', padding: '.5rem', color: 'coral', textDecoration: 'none' }}>
+        <Link to={'/'} className="nav-link" style={{ marginLeft: 'auto'}}>
           Tabular
         </Link>
-        <Link to={'/radial'} style={{ marginLeft: 'auto', padding: '.5rem', color: 'coral', textDecoration: 'none' }}>
+        <Link to={'/radial'} className="nav-link">
           Radial
         </Link>
       </header>
       <Routes>
         <Route path="/" element={<Table data={elements} />} />
-        <Route path="/radial" element={<Radial data={elements} dimensions={{radius: 575,  m: 10}} />} />
+        <Route path="/radial" element={<Radial data={elements} dimensions={{radius: dimen,  m: 10}} />} />
       </Routes>
 
     </div>
